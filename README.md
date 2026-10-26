@@ -30,8 +30,8 @@ Rather than an overwhelming, expensive CRM or an unpredictable "black-box" AI sy
 
 ### 1. Clone the repository & enter the folder
 ```bash
-git clone <your-repo-url>
-cd my-project
+git clone https://github.com/saintsmile001/lead-rescue-ai.git
+cd lead-rescue-ai
 ```
 
 ### 2. Set up a virtual environment & install dependencies
@@ -89,3 +89,4 @@ All official planning documents created during the spec-driven hackathon process
 - [`devpost/prd.md`](devpost/prd.md) — Comprehensive product requirements, screens, layouts, and behavioral rules.
 - [`devpost/spec.md`](devpost/spec.md) — Technical blueprint, component boundaries, schemas, and test plan.
 - [`devpost/checklist.md`](devpost/checklist.md) — Step-by-step verified build log.
+- [`devpost/app-map.html`](devpost/app-map.html) — Interactive visual architectural guide, component data-flow, and reusable practices.

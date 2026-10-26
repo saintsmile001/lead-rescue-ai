@@ -231,3 +231,9 @@ my-project/
 - **Learner-Selected Stack:** FastAPI + Vanilla JS + Gemini API (with `GEMINI_MODEL` env var) + deterministic template fallback.
 - **Security Boundary:** `GEMINI_API_KEY` stays on the server side in `.env`; frontend only communicates with `/api/generate`.
 - **Open Issues:** None. Specification is finalized and ready for build.
+
+## Sharing & Submission Details
+- **Public GitHub Repository:** [https://github.com/saintsmile001/lead-rescue-ai](https://github.com/saintsmile001/lead-rescue-ai)
+- **Git Remote:** `https://github.com/saintsmile001/lead-rescue-ai.git` (tracked on `main`)
+- **Demo Video:** To be recorded and linked upon submission.
+

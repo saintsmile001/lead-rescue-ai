@@ -79,3 +79,20 @@ def test_serve_index(client):
     res = client.get("/")
     assert res.status_code == 200
     assert "Lead Rescue AI" in res.text
+    assert "metric-needs-followup" in res.text
+    assert "metric-high-priority" in res.text
+    assert "leads-container" in res.text
+    assert "detail-panel-content" in res.text
+
+def test_static_css_delivery(client):
+    res = client.get("/static/style.css")
+    assert res.status_code == 200
+    assert "--color-primary" in res.text
+    assert ".dashboard-grid" in res.text
+
+def test_static_js_delivery(client):
+    res = client.get("/static/app.js")
+    assert res.status_code == 200
+    assert "initApp" in res.text
+    assert "reTriageLeads" in res.text
+    assert "handleGenerateMessage" in res.text

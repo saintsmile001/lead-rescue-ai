@@ -3,10 +3,120 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lead Rescue AI</title>
+  <title>Lead Rescue AI — Service Lead Recovery Copilot</title>
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <h1>Lead Rescue AI</h1>
-  <p>Service Lead Recovery Copilot</p>
+  <div class="app-container">
+    <!-- Top Bar / Header -->
+    <header class="app-header">
+      <div class="brand-section">
+        <h1>Lead Rescue AI</h1>
+        <p>Service Business Lead Recovery Copilot &middot; Spot cold leads &amp; draft personal follow-ups in seconds</p>
+      </div>
+      <div class="header-actions">
+        <button id="btn-reset-data" class="btn-text" title="Reset leads to original seeded demo state">Reset Sample Data</button>
+        <button id="btn-open-add-modal" class="btn btn-secondary">+ Add Lead</button>
+      </div>
+    </header>
+
+    <!-- Top Summary Metrics Row -->
+    <section class="metrics-row" aria-label="Lead Triage Metrics">
+      <div class="metric-card alert-followup">
+        <div class="metric-icon" aria-hidden="true">&#9888;</div>
+        <div class="metric-content">
+          <h3>Leads Needing Follow-up</h3>
+          <div class="metric-value" id="metric-needs-followup">0</div>
+          <div class="metric-subtitle">Total actionable leads needing contact</div>
+        </div>
+      </div>
+      <div class="metric-card alert-high">
+        <div class="metric-icon" aria-hidden="true">&#9873;</div>
+        <div class="metric-content">
+          <h3>High-Priority Leads</h3>
+          <div class="metric-value" id="metric-high-priority">0</div>
+          <div class="metric-subtitle">Urgent quotes unanswered for 3+ days</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Split Dashboard -->
+    <main class="dashboard-grid">
+      <!-- Left Column: Lead List -->
+      <section class="panel lead-list-panel">
+        <div class="panel-header">
+          <h2>Leads Pipeline</h2>
+          <div class="filter-tabs" role="tablist">
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="attention">Needs Attention</button>
+            <button class="filter-tab" data-filter="closed">Closed</button>
+          </div>
+        </div>
+        <div class="leads-list" id="leads-container">
+          <!-- Lead items dynamically rendered by app.js -->
+        </div>
+      </section>
+
+      <!-- Right Column: Lead Detail & Generator Workshop -->
+      <section class="panel workshop-panel">
+        <div class="panel-header">
+          <h2>Follow-up Generator</h2>
+          <span id="model-indicator" style="font-size: 11px; color: var(--color-text-muted);">AI Powered</span>
+        </div>
+        <div class="detail-panel" id="detail-panel-content">
+          <!-- Dynamic detail view rendered by app.js -->
+          <div class="empty-state">
+            <p>Select a lead on the left to inspect details and generate a personalized revival message.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Add New Lead Modal -->
+  <div class="modal-overlay hidden" id="add-lead-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Add New Lead</h3>
+        <button class="btn-text" id="btn-close-modal">&times;</button>
+      </div>
+      <form id="add-lead-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="form-lead-name">Customer Name *</label>
+            <input type="text" id="form-lead-name" class="form-input" required placeholder="e.g., Jennifer Martinez">
+          </div>
+          <div class="form-group">
+            <label for="form-lead-service">Requested Service *</label>
+            <input type="text" id="form-lead-service" class="form-input" required placeholder="e.g., Boiler Replacement & Flue Check">
+          </div>
+          <div class="form-group">
+            <label for="form-lead-status">Current Status</label>
+            <select id="form-lead-status" class="form-select">
+              <option value="New Inquiry">New Inquiry</option>
+              <option value="Quote Sent" selected>Quote Sent</option>
+              <option value="Followed Up">Followed Up</option>
+              <option value="Won">Won</option>
+              <option value="Lost">Lost</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="form-lead-days">Days Since Last Contact</label>
+            <input type="number" id="form-lead-days" class="form-input" min="0" max="60" value="3">
+          </div>
+          <div class="form-group">
+            <label for="form-lead-notes">Interaction Notes</label>
+            <textarea id="form-lead-notes" class="form-textarea" rows="2" placeholder="e.g., Sent $2,200 quote. Customer asked about installation warranty."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="width: auto;">Save Lead</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
 </body>
 </html>

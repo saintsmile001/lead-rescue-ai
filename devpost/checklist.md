@@ -29,7 +29,7 @@ Build mode: fast
   Learner check: Inspect generated follow-up messages for friendly, nudge, and value-focused tones and confirm they sound natural and professional.
   Commit: `Add dual-mode follow-up message generator with Gemini integration and fallback`
 
-- [ ] **3. FastAPI server, REST endpoints, and static file delivery**
+- [x] **3. FastAPI server, REST endpoints, and static file delivery**
   Becomes usable: Running `python main.py` serves `GET /api/leads`, `POST /api/triage`, `POST /api/generate`, `GET /api/health`, and mounts the static web frontend root.
   Why now: Connects the triage engine and generator behind a clean, secure local REST API, ensuring the Gemini API key stays strictly on the backend.
   PRD ref: `prd.md > Screens and Layout`, `prd.md > States and Boundaries`

@@ -62,10 +62,14 @@ Build mode: fast
 ## Hands-on Checkpoints
 
 - [x] Early usable behavior explored — Slice 2 (Generator & Triage verification)
-- [ ] Final kick-the-tires exploration and feedback completed
+- [x] Final kick-the-tires exploration and feedback completed
 
 ## Final Review
 
+- [x] 1. Compact vertical spacing in action area for above-the-fold demo visibility
+- [x] 2. Simplify model indicator badge to 'AI-Powered' (or 'Template Fallback')
+- [x] 3. Make generated message unmistakably editable with prominent 'Copy Message' button and clear label
+- [x] 4. Polish mobile responsive stack layout and button touch targets
 - [ ] Final review complete — feedback resolved and learner confirms ready to ship
 
 ## Code Tour and App Map

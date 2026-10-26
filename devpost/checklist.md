@@ -70,18 +70,21 @@ Build mode: fast
 - [x] 2. Simplify model indicator badge to 'AI-Powered' (or 'Template Fallback')
 - [x] 3. Make generated message unmistakably editable with prominent 'Copy Message' button and clear label
 - [x] 4. Polish mobile responsive stack layout and button touch targets
-- [ ] Final review complete — feedback resolved and learner confirms ready to ship
+- [x] Final review complete — feedback resolved and learner confirms ready to ship
 
 ## Code Tour and App Map
 
-- [ ] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
-- [ ] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
-- [ ] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
+- [x] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
+- [x] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
+- [x] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
 
-Activity and evidence: [to be populated upon completion]
-Route and stops: [to be populated upon completion]
-Edit outcome: [to be populated upon completion]
-Reflection: [to be populated upon completion]
-Activity mode: [to be populated upon completion]
+Activity and evidence: Focused architectural walkthrough connecting deterministic triage in `triage.py` and dual-mode message generation in `generator.py` to 17 automated tests in `test_triage.py` and `test_server.py`.
+Route and stops: `triage.py` (`triage_single_lead`), `generator.py` (`generate_followup_message`), `static/app.js` (`handleGenerateMessage`).
+Edit outcome: Implemented 4 post-review UI refinements (compact spacing, simplified model indicator, unmistakable editable message area, mobile layout polish) verified mechanically with 17 passing tests.
+Reflection: Connected to desired learning outcome: separating deterministic business logic from LLM generation ensures zero hallucinations on calculations while delivering natural, personalized message revival.
+Activity mode: Focused alternative based on project code, test evidence, and standalone app-map.html guide.
 
 ## Revisions
+- Refined model configuration to `gemini-3.5-flash-lite` with full fallback safety net.
+- Added first-name extraction to all generator templates and AI prompts for natural conversational tone.
+- Consolidated triage as single source of truth in backend with `/api/triage`.

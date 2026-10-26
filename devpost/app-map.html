@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lead Rescue AI — App Map & Architectural Guide</title>
+  <style>
+    :root {
+      --bg: #F8FAFC;
+      --card: #FFFFFF;
+      --text: #0F172A;
+      --muted: #64748B;
+      --border: #E2E8F0;
+      --primary: #2563EB;
+      --primary-light: #EFF6FF;
+      --code-bg: #1E293B;
+      --code-text: #F8FAFC;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 32px 20px;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--border);
+    }
+    h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
+    p.subtitle { color: var(--muted); font-size: 15px; margin-top: 4px; }
+    
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+    }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+    h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+
+    /* Diagram */
+    .diagram-container {
+      text-align: center;
+      padding: 20px 10px;
+      background: var(--primary-light);
+      border: 1px solid #BFDBFE;
+      border-radius: 8px;
+      margin: 16px 0;
+      overflow-x: auto;
+    }
+    svg text { font-family: system-ui, sans-serif; font-size: 12px; }
+
+    /* Stops List */
+    .stops-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .stop-item {
+      border-left: 3px solid var(--primary);
+      padding-left: 14px;
+    }
+    .stop-path {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .stop-desc { font-size: 14px; color: var(--text); margin-top: 2px; }
+
+    /* Code Snippet */
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 12px 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    code { font-family: inherit; }
+
+    /* Pointers */
+    .pointer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (max-width: 640px) {
+      .pointer-grid { grid-template-columns: 1fr; }
+    }
+    .pointer-card {
+      background: #F8FAFC;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .pointer-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .pointer-card p { font-size: 13px; color: var(--muted); }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      background: #E2E8F0;
+      color: #334155;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Lead Rescue AI — App Map</h1>
+      <p class="subtitle">Architectural walkthrough and reusable technical takeaways for the Devpost Build With AI hackathon.</p>
+    </header>
+
+    <!-- Overview Card -->
+    <div class="card">
+      <h2>Plain-Language System Overview</h2>
+      <p>
+        <strong>Lead Rescue AI</strong> runs as a single local process. A Python FastAPI web server coordinates business logic and delivers a zero-build Vanilla JS single-page dashboard. The system has two primary responsibilities:
+      </p>
+      <ul style="margin-left: 20px; margin-top: 8px; font-size: 14px;">
+        <li><strong>Deterministic Triage:</strong> Evaluates pipeline status and inactivity duration using clear, transparent rules to highlight leads slipping away.</li>
+        <li><strong>Dual-Mode Revival Drafting:</strong> Calls <code>Google Gemini</code> (configured model <code>gemini-3.5-flash-lite</code>) to write natural, personalized follow-ups, with automatic fallback to local templates if offline or unconfigured.</li>
+      </ul>
+    </div>
+
+    <!-- Data Flow Diagram -->
+    <div class="card">
+      <h2>Action Flow: "Generate Follow-up Message"</h2>
+      <div class="diagram-container">
+        <svg viewBox="0 0 760 120" width="100%" height="120" xmlns="http://www.w3.org/2000/svg">
+          <!-- Boxes -->
+          <rect x="10" y="35" width="150" height="50" rx="6" fill="#FFFFFF" stroke="#2563EB" stroke-width="2"/>
+          <text x="85" y="58" text-anchor="middle" font-weight="bold" fill="#0F172A">Frontend Dashboard</text>
+          <text x="85" y="74" text-anchor="middle" fill="#64748B">static/app.js</text>
+
+          <line x1="160" y1="60" x2="220" y2="60" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow)"/>
+
+          <rect x="220" y="35" width="150" height="50" rx="6" fill="#FFFFFF" stroke="#2563EB" stroke-width="2"/>
+          <text x="295" y="58" text-anchor="middle" font-weight="bold" fill="#0F172A">FastAPI Server</text>
+          <text x="295" y="74" text-anchor="middle" fill="#64748B">main.py: POST /api/generate</text>
+
+          <line x1="370" y1="60" x2="430" y2="60" stroke="#2563EB" stroke-width="2"/>
+
+          <rect x="430" y="15" width="150" height="42" rx="6" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+          <text x="505" y="34" text-anchor="middle" font-weight="bold" fill="#4F46E5">Primary: Gemini API</text>
+          <text x="505" y="48" text-anchor="middle" font-size="10" fill="#6366F1">gemini-3.5-flash-lite</text>
+
+          <rect x="430" y="65" width="150" height="42" rx="6" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/>
+          <text x="505" y="84" text-anchor="middle" font-weight="bold" fill="#92400E">Fallback: Templates</text>
+          <text x="505" y="98" text-anchor="middle" font-size="10" fill="#B45309">100% Offline Guaranteed</text>
+
+          <line x1="580" y1="60" x2="630" y2="60" stroke="#2563EB" stroke-width="2"/>
+
+          <rect x="630" y="35" width="120" height="50" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="2"/>
+          <text x="690" y="58" text-anchor="middle" font-weight="bold" fill="#15803D">Editable Output</text>
+          <text x="690" y="74" text-anchor="middle" fill="#166534">1-Click Copy</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Code Tour Stops -->
+    <div class="card">
+      <h2>Code Tour: The 3 Core Stops</h2>
+      <div class="stops-list">
+        <div class="stop-item">
+          <span class="tag">Stop 1: Triage Rules</span>
+          <div class="stop-path">triage.py &rarr; triage_single_lead()</div>
+          <div class="stop-desc">
+            Evaluates the elapsed inactivity duration and status. Assigns <code>is_high_priority = True</code> for quotes pending &ge; 72 hours, and computes the diagnostic explanation string (e.g., <em>"Quote unanswered for 4 days"</em>).
+          </div>
+        </div>
+
+        <div class="stop-item">
+          <span class="tag">Stop 2: Message Generation Engine</span>
+          <div class="stop-path">generator.py &rarr; generate_followup_message()</div>
+          <div class="stop-desc">
+            Attempts contextual AI generation using Google Gemini with tone guidelines and first-name extraction. If the API key is missing or a network error occurs, it instantly returns a deterministic template string with <code>source: "fallback"</code>.
+          </div>
+        </div>
+
+        <div class="stop-item">
+          <span class="tag">Stop 3: Interactive Dashboard Workshop</span>
+          <div class="stop-path">static/app.js &rarr; handleGenerateMessage()</div>
+          <div class="stop-desc">
+            Posts lead parameters to <code>/api/generate</code>, renders the response in an editable textarea, toggles the source badge, and manages the clipboard copy feedback.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- How to Change This -->
+    <div class="card">
+      <h2>"To Change This, Start Here"</h2>
+      <div class="pointer-grid">
+        <div class="pointer-card">
+          <h4>Customize Follow-up Tones</h4>
+          <p>Open <code>generator.py</code> and modify <code>FALLBACK_TEMPLATES</code> or the prompt instructions in <code>generate_ai_message()</code>.</p>
+        </div>
+        <div class="pointer-card">
+          <h4>Tweak Urgency Thresholds</h4>
+          <p>Open <code>triage.py</code> and adjust the hour thresholds (72h for high priority, 48h for inquiries).</p>
+        </div>
+        <div class="pointer-card">
+          <h4>Add Sample Leads</h4>
+          <p>Open <code>sample_data.py</code> and add records to <code>get_sample_leads()</code>.</p>
+        </div>
+        <div class="pointer-card">
+          <h4>Adjust UI Theme & Colors</h4>
+          <p>Open <code>static/style.css</code> and update CSS variables under <code>:root</code>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Practice to Reuse -->
+    <div class="card" style="border-left: 4px solid var(--primary);">
+      <h2>A Practice to Reuse on Future AI Projects</h2>
+      <p style="font-size: 14px; margin-bottom: 10px;">
+        <strong>1. Separate Deterministic Business Logic from AI Generation:</strong> Rather than relying on an LLM to calculate elapsed dates and determine lead priority, we encapsulated triage in pure, testable Python arithmetic (<code>triage.py</code>). This made triage 100% predictable, lightning fast, and free from hallucinations.
+      </p>
+      <p style="font-size: 14px;">
+        <strong>2. Build the Fallback First:</strong> By creating and verifying high-quality deterministic templates before wiring up the live Gemini API, the application was never left vulnerable to rate limits, network outages, or missing keys.
+      </p>
+    </div>
+
+    <!-- Run Instructions -->
+    <div class="card">
+      <h2>How to Run Again</h2>
+      <pre><code># 1. Activate virtual environment
+.\venv\Scripts\activate   # (or source venv/bin/activate on Unix)
+
+# 2. Run automated test suite
+pytest -v
+
+# 3. Start local server
+python main.py
+# Open: http://127.0.0.1:8000</code></pre>
+    </div>
+  </div>
+</body>
+</html>

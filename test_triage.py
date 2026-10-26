@@ -187,3 +187,61 @@ def test_seeded_sample_leads(ref_time):
     tom = next(l for l in result["leads"] if l["name"] == "Tom Bradley")
     assert tom["status"] == "Won"
     assert tom["urgency"] == "none"
+
+from generator import generate_template_message, generate_followup_message
+
+def test_deterministic_template_fallback_all_tones():
+    """Verifies that template generation produces high-quality messages for all 3 tones."""
+    lead = {
+        "name": "Marcus Vance",
+        "service": "Main Pipe Replacement",
+        "status": "Quote Sent",
+        "notes": "Sent $1,800 quote"
+    }
+    
+    # 1. Friendly Check-in
+    msg_friendly = generate_template_message(lead, tone="friendly")
+    assert "Marcus Vance" in msg_friendly
+    assert "Main Pipe Replacement" in msg_friendly
+    assert len(msg_friendly) > 30
+
+    # 2. Gentle Nudge
+    msg_nudge = generate_template_message(lead, tone="nudge")
+    assert "Marcus Vance" in msg_nudge
+    assert "Main Pipe Replacement" in msg_nudge
+    assert "schedule" in msg_nudge.lower()
+
+    # 3. Value-Focused
+    msg_value = generate_template_message(lead, tone="value")
+    assert "Marcus Vance" in msg_value
+    assert "guarantee" in msg_value.lower()
+    assert "$1,800" in msg_value
+
+def test_generator_graceful_fallback_without_key(monkeypatch):
+    """Verifies that generator always succeeds with source='fallback' if GEMINI_API_KEY is unset."""
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    
+    lead = {
+        "name": "Sarah Jenkins",
+        "service": "Tankless Water Heater",
+        "status": "New Inquiry"
+    }
+    res = generate_followup_message(lead, tone="friendly")
+    assert res["source"] == "fallback"
+    assert "Sarah Jenkins" in res["message"]
+    assert "Tankless Water Heater" in res["message"]
+    assert res["error"] is None
+
+def test_generator_graceful_fallback_on_api_error(monkeypatch):
+    """Verifies that even if an invalid key triggers an API error, fallback succeeds seamlessly."""
+    monkeypatch.setenv("GEMINI_API_KEY", "invalid_test_key_12345")
+    
+    lead = {
+        "name": "Dave Miller",
+        "service": "Sump Pump",
+        "status": "Quote Sent"
+    }
+    res = generate_followup_message(lead, tone="nudge")
+    assert res["source"] == "fallback"
+    assert "Dave Miller" in res["message"]
+    assert res["error"] is not None

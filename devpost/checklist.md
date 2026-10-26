@@ -9,7 +9,7 @@ Build mode: fast
 
 ## Slices
 
-- [ ] **1. Project scaffold, canonical triage engine, seeded sample data & automated test suite**
+- [x] **1. Project scaffold, canonical triage engine, seeded sample data & automated test suite**
   Becomes usable: The core triage and metric engine can be run and tested mechanically via `pytest test_triage.py`, proving all rules (high-priority quotes >= 3 days, medium-priority inquiries >= 2 days, recent leads, won leads, and metric subset hierarchy).
   Why now: Proves the foundational deterministic logic and metric calculations with automated tests before adding server and UI layers, bootstrapping the repository cleanly.
   PRD ref: `prd.md > 1. Deterministic Lead Triage & Urgency Rules`, `prd.md > 2. Lead List & Seeded Sample Data`

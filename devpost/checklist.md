@@ -19,7 +19,7 @@ Build mode: fast
   Learner check: Run `pytest` in your terminal and verify that all lead triage rules, edge cases, and metric calculations pass cleanly.
   Commit: `Initialize project and canonical lead triage engine with automated tests`
 
-- [ ] **2. Dual-mode follow-up generator with Gemini API and template fallback**
+- [x] **2. Dual-mode follow-up generator with Gemini API and template fallback**
   Becomes usable: Running `generator.py` produces personalized follow-up messages for any lead in 3 tones (Friendly Check-in, Gentle Nudge, Value-Focused), both with Gemini AI (when configured) and via deterministic template fallback (when unconfigured or offline), returning `{ message, source }`.
   Why now: Proves the unique kernel (context-aware revival message generation) and validates the AI integration and template fallback safety net early.
   PRD ref: `prd.md > 3. Dual-Mode Follow-up Message Generation`

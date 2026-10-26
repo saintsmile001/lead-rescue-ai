@@ -39,7 +39,7 @@ Build mode: fast
   Learner check: Open `http://127.0.0.1:8000/api/health` in your browser and confirm server status, configured model, and API key availability.
   Commit: `Implement FastAPI backend server with REST endpoints and static mounting`
 
-- [ ] **4. Interactive split dashboard with live triage, message generation, editing & clipboard copy**
+- [x] **4. Interactive split dashboard with live triage, message generation, editing & clipboard copy**
   Becomes usable: A complete end-to-end web dashboard where the operator sees summary metric cards, browses/filters leads, selects a cold lead (e.g., Marcus Vance), generates a tailored revival message with visible source badge, edits it, and copies to clipboard with "Copied!" confirmation.
   Why now: Delivers the core user journey end to end on screen, bringing the UI styling, color hierarchy, and interaction to life.
   PRD ref: `prd.md > The Core Journey`, `prd.md > Screens and Layout`, `prd.md > Look and Feel`, `prd.md > 4. Message Editing & Clipboard Copy`
@@ -49,7 +49,7 @@ Build mode: fast
   Learner check: Open `http://127.0.0.1:8000`, review the dashboard layout, select Marcus Vance, generate a message, make an edit, and copy it to clipboard.
   Commit: `Build interactive split dashboard with live triage and message workshop`
 
-- [ ] **5. Manual lead creation, localStorage persistence, and sample data reset**
+- [x] **5. Manual lead creation, localStorage persistence, and sample data reset**
   Becomes usable: The operator can click "Add Lead" to open a modal, enter a new customer inquiry, and immediately see the metric counts and lead list update dynamically; edits persist across browser refreshes, and clicking "Reset Sample Data" cleanly restores the original 5 seeded leads.
   Why now: Completes the full proof-of-concept boundary and demo flow without external database complexity.
   PRD ref: `prd.md > 5. Manual Lead Creation & Lean State Management`, `prd.md > States and Boundaries`
@@ -61,7 +61,7 @@ Build mode: fast
 
 ## Hands-on Checkpoints
 
-- [ ] Early usable behavior explored — Slice 2 (Generator & Triage verification)
+- [x] Early usable behavior explored — Slice 2 (Generator & Triage verification)
 - [ ] Final kick-the-tires exploration and feedback completed
 
 ## Final Review
